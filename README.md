@@ -13,7 +13,7 @@ Since a standard controller doesn't have enough buttons to represent every gear 
 
 Instead of dedicating one button to each gear, this plugin maintains an internal gear state and converts simple sequential controller inputs into persistent virtual H-shifter positions.
 
-Features
+Features:
 
 🚚 Virtual H-pattern gearbox
 
@@ -36,7 +36,7 @@ Features
 🔄 Real-time virtual button mapping
 
 
-Controller Layout
+Controller Layout:
 
 Control	Function
 
@@ -46,7 +46,7 @@ LB	Shift Down
 RB	Shift Up
 
 
-How it works
+How it works:
 
 The plugin continuously tracks the currently selected gear.
 
@@ -61,7 +61,7 @@ The plugin updates its internal gear state.
 The selected gear is translated into a corresponding vJoy button, allowing games to interpret it as a virtual H-shifter position.
 
 
-Technologies Used
+Technologies Used:
 
 Python
 Joystick Gremlin Ex
@@ -71,7 +71,7 @@ State Machine Design
 Virtual HID Emulation
 
 
-Learning Outcomes
+Learning Outcomes:
 
 This project involved:
 
