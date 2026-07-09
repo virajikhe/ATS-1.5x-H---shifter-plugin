@@ -1,19 +1,4 @@
-﻿// -*- coding: utf-8; -*-
-// SPDX-License-Identifier: GPL-3.0-only
-//
-// Virtual H-Shifter action UI.
-//
-// NOTE: this deliberately avoids importing anything via a relative path
-// like "../../qml" (the pattern used by the core/bundled action plugins).
-// Those relative imports resolve relative to this file's location, and
-// since this is a USER plugin loaded from an arbitrary external directory
-// (see gremlin/plugin_manager.py - user plugin folders are added to
-// sys.path directly and are not nested under the app's install root), a
-// "../../qml" import would point outside the application entirely and
-// fail to resolve. Only globally registered QML modules are used here:
-// QtQuick/QtQuick.Controls (built-in), and Gremlin.ActionPlugins /
-// Gremlin.Device, which are registered by Python via qmlRegisterType and
-// are therefore resolvable regardless of where this file lives on disk.
+
 
 import QtQuick
 import QtQuick.Controls
@@ -37,7 +22,6 @@ Item {
         anchors.right: parent.right
         spacing: 8
 
-        // -- Direction --------------------------------------------------
         RowLayout {
             Label { text: "Shift direction on this button:" }
 
@@ -61,7 +45,6 @@ Item {
             }
         }
 
-        // -- Clutch source ------------------------------------------------
         Label {
             text: "<b>Clutch input</b> (axis must exceed the threshold to allow a shift)"
         }
@@ -126,7 +109,6 @@ Item {
             }
         }
 
-        // -- Output device --------------------------------------------------
         Label {
             text: "<b>Output vJoy device</b> (must be the same on both the shift-up and shift-down action)"
         }
@@ -143,11 +125,7 @@ Item {
                     _outputVjoy.setState(_outputDevice.currentText, _outputInput.currentText)
                 }
             }
-            // This combo box has to be shown for the device picker's
-            // setState() API to work (it needs a paired device+input
-            // selection), but the specific button chosen here is not
-            // actually used - the functor computes the button per gear
-            // itself (Reverse->1, Neutral->none, Gear N->N+2).
+       
             ComboBox {
                 id: _outputInput
                 Layout.minimumWidth: 150
@@ -189,7 +167,6 @@ Item {
             }
         }
 
-        // -- Limits ----------------------------------------------------
         RowLayout {
             spacing: 20
 
@@ -218,7 +195,6 @@ Item {
             }
         }
 
-        // -- Debounce -----------------------------------------------------
         RowLayout {
             Label { text: "Debounce:" }
 
