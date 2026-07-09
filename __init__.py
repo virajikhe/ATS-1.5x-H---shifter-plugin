@@ -1,7 +1,5 @@
 # -*- coding: utf-8; -*-
 # SPDX-License-Identifier: GPL-3.0-only
-#
-# Virtual H-Shifter action plugin for Joystick Gremlin R14.x (WhiteMagic)
 
 from __future__ import annotations
 
@@ -74,7 +72,7 @@ class VirtualHShifterFunctor(AbstractFunctor):
         if cid is None or aid is None:
             return False
         try:
-            raw = VJoyProxy()[cid].axis(aid).value  # -1.0 .. 1.0
+            raw = VJoyProxy()[cid].axis(aid).value  
         except error.VJoyError:
             return False
         fraction = (raw + 1.0) / 2.0
@@ -120,14 +118,12 @@ class VirtualHShifterFunctor(AbstractFunctor):
             try:
                 vjoy_out = VJoyProxy()[self.data.output_vjoy_id]
                 
-                # 1. Release previous vJoy button immediately
+                
                 if old_button is not None and old_button != new_button:
                     vjoy_out.button(old_button).is_pressed = False
                     
-                # 2. Wait synchronously to create a clean gap between button states
                 time.sleep(0.04)
                 
-                # 3. Press the new vJoy button
                 if new_button is not None:
                     vjoy_out.button(new_button).is_pressed = True
                     
@@ -138,7 +134,6 @@ class VirtualHShifterFunctor(AbstractFunctor):
                 )
                 return
 
-            # 4. Update state memory ONLY after physical outputs have successfully changed
             state["gear"] = new_gear
             state["button"] = new_button
             state["last_shift"] = time.time()
@@ -175,7 +170,6 @@ class VirtualHShifterModel(ActionModel):
             self._parent_sequence_index.index
         ).actionBehavior
 
-    # -- direction ------------------------------------------------------
     def _get_direction(self) -> str:
         return self._data.direction
 
@@ -188,7 +182,6 @@ class VirtualHShifterModel(ActionModel):
         str, fget=_get_direction, fset=_set_direction, notify=directionChanged
     )
 
-    # -- clutch source ----------------------------------------------------
     def _get_clutch_vjoy_id(self) -> int:
         return self._data.clutch_vjoy_id if self._data.clutch_vjoy_id is not None else -1
 
@@ -218,7 +211,6 @@ class VirtualHShifterModel(ActionModel):
         notify=clutchAxisIdChanged
     )
 
-    # -- clutch threshold -------------------------------------------------
     def _get_clutch_threshold_percent(self) -> int:
         return round(self._data.clutch_threshold * 100)
 
@@ -233,7 +225,6 @@ class VirtualHShifterModel(ActionModel):
         notify=clutchThresholdChanged
     )
 
-    # -- output device ----------------------------------------------------
     def _get_output_vjoy_id(self) -> int:
         return self._data.output_vjoy_id if self._data.output_vjoy_id is not None else -1
 
@@ -250,7 +241,6 @@ class VirtualHShifterModel(ActionModel):
         notify=outputVjoyIdChanged
     )
 
-    # -- max gear -----------------------------------------------------------
     def _get_max_gear(self) -> int:
         return self._data.max_gear
 
@@ -263,7 +253,6 @@ class VirtualHShifterModel(ActionModel):
         int, fget=_get_max_gear, fset=_set_max_gear, notify=maxGearChanged
     )
 
-    # -- reverse enabled ------------------------------------------------
     def _get_reverse_enabled(self) -> bool:
         return self._data.reverse_enabled
 
@@ -277,7 +266,6 @@ class VirtualHShifterModel(ActionModel):
         notify=reverseEnabledChanged
     )
 
-    # -- debounce -----------------------------------------------------------
     def _get_debounce_ms(self) -> int:
         return self._data.debounce_ms
 
